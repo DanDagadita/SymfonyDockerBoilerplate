@@ -42,10 +42,12 @@ After creating a controller, for instance HomeController, go to http://localhost
 On Windows, Symfony projects that use Docker are slow because of the var and vendor folders. The docker-compose file 
 excludes these folders from being synced with the container. It is recommended to un-comment these lines after running 
 docker-compose for the first time, for improved performance. (lines 11, 12 and 18, 19 in `docker-compose.yml`). Example 
-difference in performance for a response: **120ms** with the lines un-commented vs **1750ms** with the lines commented.
+difference in performance for a response: **120ms** with the lines un-commented vs **1750ms** with the lines commented. 
+You can also comment out the `command` line in the `php` service in `docker-compose.yml` at line 15, and manually enter 
+those commands (except for php-fpm which is not necessary with the line commented out) in the container.
 
 ## 6. Creating a database
-Run the command `php bin/console doctrine:database:create`. Create an Entity using the MakerBundle.
+Create an Entity using the MakerBundle.
 
 Run `php bin/console make:migration`. Then, apply the migration: `php bin/console doctrine:migrations:migrate`.
 

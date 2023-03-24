@@ -12,19 +12,19 @@ services:
 #      - /srv/app/var
   php:
     build: ./
-    command: sh -c 'composer install && php-fpm'
+    command: sh -c 'composer install && npm install && npm run build && php-fpm'
     volumes:
       - ./:/srv/app
 #      - /srv/app/vendor # used to stop syncing vendor and cache, thus speeding up the application on Windows
 #      - /srv/app/var
     environment:
-      DATABASE_URL: mysql://app:password@database:3306/app?serverVersion=8&charset=utf8mb4
+      DATABASE_URL: mysql://root:password@database:3306/app?serverVersion=8&charset=utf8mb4
   database:
     image: mysql:8
     ports:
       - '3306:3306'
     environment:
-      MYSQL_DATABASE: app
+      MYSQL_DATABASE: root
       MYSQL_ROOT_PASSWORD: password
     volumes:
       - database_data:/var/lib/mysql

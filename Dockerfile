@@ -5,7 +5,7 @@ WORKDIR /srv/app
 RUN apt-get update \
     && apt-get -y install git zip libpq-dev libicu-dev \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl pdo php-mysql
+    && docker-php-ext-install intl mysqli pdo pdo_mysql
 
 RUN curl -sL https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer
 
