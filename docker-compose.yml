@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./:/srv/app
+#      - /srv/app/vendor # used to stop syncing vendor and cache, thus speeding up the application on Windows
+#      - /srv/app/var
+  php:
+    build: ./
+    command: sh -c 'composer install && php-fpm'
+    volumes:
+      - ./:/srv/app
+#      - /srv/app/vendor # used to stop syncing vendor and cache, thus speeding up the application on Windows
+#      - /srv/app/var
+    environment:
+      DATABASE_URL: mysql://app:password@database:3306/app?serverVersion=8&charset=utf8mb4
+  database:
+    image: mysql:8
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: app
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - database_data:/var/lib/mysql
+
+volumes:
+  database_data:
